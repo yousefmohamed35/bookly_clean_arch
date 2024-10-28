@@ -20,7 +20,7 @@ class HomeViewBody extends StatelessWidget {
               ),
               child: CustomAppBar(),
             ),
-            FeaturedBookListViewBlocBuilder(),
+            FeaturedBookListViewBlocConsumer(),
             SizedBox(
               height: 50,
             ),
@@ -35,16 +35,16 @@ class HomeViewBody extends StatelessWidget {
         ),
       ),
       SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: BestSellerListViewBlocBuilder(),
-              );
-            },
-            childCount: 1, // Display BestSellerListViewBlocBuilder once
-          ),
+        delegate: SliverChildBuilderDelegate(
+          (context, index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: BestSellerListViewBlocBuilder(),
+            );
+          },
+          childCount: 1, // Display BestSellerListViewBlocBuilder once
         ),
+      ),
     ]);
   }
 }

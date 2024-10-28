@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:booklycleanarch/Features/home/data/models/book_model/book_model.dart';
 import 'package:booklycleanarch/Features/home/domain/entities/book_entity.dart';
 import 'package:booklycleanarch/constants.dart';
@@ -19,7 +17,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   Future<List<BookEntity>> fetchFeaturedBooks({int pageNumber = 0}) async {
     var data = await apiService.get(
         endPoint:
-            'volumes?q=programming&filtering=free-ebooks&startIndex=${pageNumber * 10}');
+            'volumes?Filtering=free-ebooks&q=programming&startIndex=${pageNumber * 10}');
     List<BookEntity> books = getBooksList(data);
     saveBooksData(books, kFeaturedBox);
     return books;
