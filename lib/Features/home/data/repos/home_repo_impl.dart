@@ -4,6 +4,7 @@ import 'package:booklycleanarch/Features/home/domain/entities/book_entity.dart';
 import 'package:booklycleanarch/Features/home/domain/repos/home_repo.dart';
 import 'package:booklycleanarch/core/errors/failure.dart';
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 
 class HomeRepoImpl extends HomeRepo {
   final HomeLocalDataSource homeLocalDataSource;
@@ -22,7 +23,7 @@ class HomeRepoImpl extends HomeRepo {
       books = await homeRemoteDataSource.fetchFeaturedBooks();
       return right(books);
     } on Exception catch (e) {
-      return left(Failure());
+      return left(ServerFailure());
     }
   }
 
@@ -36,8 +37,10 @@ class HomeRepoImpl extends HomeRepo {
       }
       books = await homeRemoteDataSource.fetchNewestBooks();
       return right(books);
-    } on Exception catch (e) {
-      return left(Failure());
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioError(e));
+      }
     }
   }
 }
