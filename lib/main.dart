@@ -7,6 +7,7 @@ import 'package:booklycleanarch/Features/home/presentation/manager/newest_books/
 import 'package:booklycleanarch/constants.dart';
 import 'package:booklycleanarch/core/functions/setup_service_locator.dart';
 import 'package:booklycleanarch/core/utils/app_router.dart';
+import 'package:booklycleanarch/core/utils/simple_bloc_observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,6 +19,7 @@ void main() async {
   Hive.registerAdapter(BookEntityAdapter());
   await Hive.openBox<BookEntity>(kFeaturedBox);
   await Hive.openBox<BookEntity>(kNewestBox);
+  Bloc.observer = SimpleBlocObserver();
   runApp(const Bookly());
 }
 
@@ -35,7 +37,7 @@ class Bookly extends StatelessWidget {
             ),
           );
         }),
-         BlocProvider(create: (context) {
+        BlocProvider(create: (context) {
           return NewestBooksCubit(
             FetchNewestBooksUseCase(
               homeRepo: getIt.get<HomeRepoImpl>(),
